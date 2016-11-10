@@ -1,0 +1,267 @@
+
+
+
+<h1>Your product</h1>
+
+<!--
+<div ng-repeat="item in items">
+    <span>{{item.title}}</span>
+    <input ng-model="item.quantity" />
+    <span>{{item.price | currency}}</span>
+    {{item.price * item.quantity | currency}}<button ng-click="remove($index)">Remove</button>
+</div>
+-->
+
+<div class="page-header">
+    <h1>product list</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>title</th>
+                <th>price</th>
+                <th>quantity</th>
+                <th>total</th>
+                <th>action</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <div >
+                <tr data-ng-repeat="item in items " >
+                <td>{{item.title}}</td>
+                <td>{{item.price | currency}}</td>
+                <td><input ng-model="item.quantity" /></td>
+
+                <td>{{item.price * item.quantity | currency}}</td>
+                <td>
+                   <!-- <button class="btn btn-link" ng-click="remove($index)">Remove</button> <button class="btn btn-link" ng-click="remove($index)">update</button>
+                 put-order="ScopedInterventionMatchesService.putOrder(item)"
+                 -->
+
+                </td>
+
+            </tr>
+            </div>
+            </tbody>
+
+        </table>
+
+    </div>
+{{orders}}
+
+</div>
+<div id="chart" style="height:1800px;width: 800px"></div>
+<script type="text/javascript">
+    // 初始化图表标签
+    var myChart = echarts.init(document.getElementById('chart'));
+    var data = [
+        {name: '海门', value: 9},
+        {name: '鄂尔多斯', value: 12},
+        {name: '招远', value: 12},
+        {name: '舟山', value: 12},
+        {name: '齐齐哈尔', value: 14}
+
+    ];
+    var geoCoordMap = {
+        '海门':[121.15,31.89],
+        '鄂尔多斯':[109.781327,39.608266],
+        '招远':[120.38,37.35],
+        '舟山':[122.207216,29.985295],
+        '齐齐哈尔':[123.97,47.33]
+    };
+
+    var convertData = function (data) {
+        var res = [];
+        for (var i = 0; i < data.length; i++) {
+            var geoCoord = geoCoordMap[data[i].name];
+            if (geoCoord) {
+                res.push({
+                    name: data[i].name,
+                    value: geoCoord.concat(data[i].value)
+                });
+            }
+        }
+        return res;
+    };
+
+    option = {
+        title: {
+            text: '全国主要城市空气质量 - 百度地图',
+            subtext: 'data from PM25.in',
+            sublink: 'http://www.pm25.in',
+            left: 'center'
+        },
+        tooltip : {
+            trigger: 'item'
+        },
+        bmap: {
+            center: [104.114129, 37.550339],
+            zoom: 5,
+            roam: true,
+            mapStyle: {
+                styleJson: [{
+                    'featureType': 'water',
+                    'elementType': 'all',
+                    'stylers': {
+                        'color': '#d1d1d1'
+                    }
+                }, {
+                    'featureType': 'land',
+                    'elementType': 'all',
+                    'stylers': {
+                        'color': '#f3f3f3'
+                    }
+                }, {
+                    'featureType': 'railway',
+                    'elementType': 'all',
+                    'stylers': {
+                        'visibility': 'off'
+                    }
+                }, {
+                    'featureType': 'highway',
+                    'elementType': 'all',
+                    'stylers': {
+                        'color': '#fdfdfd'
+                    }
+                }, {
+                    'featureType': 'highway',
+                    'elementType': 'labels',
+                    'stylers': {
+                        'visibility': 'off'
+                    }
+                }, {
+                    'featureType': 'arterial',
+                    'elementType': 'geometry',
+                    'stylers': {
+                        'color': '#fefefe'
+                    }
+                }, {
+                    'featureType': 'arterial',
+                    'elementType': 'geometry.fill',
+                    'stylers': {
+                        'color': '#fefefe'
+                    }
+                }, {
+                    'featureType': 'poi',
+                    'elementType': 'all',
+                    'stylers': {
+                        'visibility': 'off'
+                    }
+                }, {
+                    'featureType': 'green',
+                    'elementType': 'all',
+                    'stylers': {
+                        'visibility': 'off'
+                    }
+                }, {
+                    'featureType': 'subway',
+                    'elementType': 'all',
+                    'stylers': {
+                        'visibility': 'off'
+                    }
+                }, {
+                    'featureType': 'manmade',
+                    'elementType': 'all',
+                    'stylers': {
+                        'color': '#d1d1d1'
+                    }
+                }, {
+                    'featureType': 'local',
+                    'elementType': 'all',
+                    'stylers': {
+                        'color': '#d1d1d1'
+                    }
+                }, {
+                    'featureType': 'arterial',
+                    'elementType': 'labels',
+                    'stylers': {
+                        'visibility': 'off'
+                    }
+                }, {
+                    'featureType': 'boundary',
+                    'elementType': 'all',
+                    'stylers': {
+                        'color': '#fefefe'
+                    }
+                }, {
+                    'featureType': 'building',
+                    'elementType': 'all',
+                    'stylers': {
+                        'color': '#d1d1d1'
+                    }
+                }, {
+                    'featureType': 'label',
+                    'elementType': 'labels.text.fill',
+                    'stylers': {
+                        'color': '#999999'
+                    }
+                }]
+            }
+        },
+        series : [
+            {
+                name: 'pm2.5',
+                type: 'scatter',
+                coordinateSystem: 'bmap',
+                data: convertData(data),
+                symbolSize: function (val) {
+                    return val[2] / 10;
+                },
+                label: {
+                    normal: {
+                        formatter: '{b}',
+                        position: 'right',
+                        show: false
+                    },
+                    emphasis: {
+                        show: true
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        color: 'purple'
+                    }
+                }
+            },
+            {
+                name: 'Top 5',
+                type: 'effectScatter',
+                coordinateSystem: 'bmap',
+                data: convertData(data.sort(function (a, b) {
+                    return b.value - a.value;
+                }).slice(0, 6)),
+                symbolSize: function (val) {
+                    return val[2] / 10;
+                },
+                showEffectOn: 'render',
+                rippleEffect: {
+                    brushType: 'stroke'
+                },
+                hoverAnimation: true,
+                label: {
+                    normal: {
+                        formatter: '{b}',
+                        position: 'right',
+                        show: true
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        color: 'purple',
+                        shadowBlur: 10,
+                        shadowColor: '#333'
+                    }
+                },
+                zlevel: 1
+            }
+        ]
+    };
+    myChart.setOption(option);
+</script>
+
+
+
