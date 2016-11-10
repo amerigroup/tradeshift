@@ -28,7 +28,7 @@
 
             <tbody>
             <div >
-                <tr dir-paginate="item in items | filter:q | itemsPerPage: pageSize" current-page="currentPage">
+                <tr data-ng-repeat="item in items " >
                 <td>{{item.title}}</td>
                 <td>{{item.price | currency}}</td>
                 <td><input ng-model="item.quantity" /></td>
@@ -38,9 +38,7 @@
                    <!-- <button class="btn btn-link" ng-click="remove($index)">Remove</button> <button class="btn btn-link" ng-click="remove($index)">update</button>
                  put-order="ScopedInterventionMatchesService.putOrder(item)"
                  -->
-                   <scoped-intervention-matched-item item="item"
-                                                     orders="orders">
-                    </scoped-intervention-matched-item>
+
                 </td>
 
             </tr>
@@ -53,7 +51,7 @@
 {{orders}}
 
 </div>
-<div class="row">
+<!--<div class="row">
     <div class="text-center">
         <small>this is in "OtherController"</small>
 
@@ -62,7 +60,7 @@
         </div>
         </div>
 
-</div>
+</div>-->
 
 
 
