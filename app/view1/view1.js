@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.view1', ['ngRoute'])
+angular.module('myApp.view1', ['ngRoute','echarts-ng'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/view1', {
@@ -55,29 +55,29 @@ angular.module('myApp.view1', ['ngRoute'])
   $scope.remove = function(index) {
     $scope.items.splice(index, 1);
   };
-}])
-    .directive('scopedInterventionMatchedItem', ['ScopedInterventionMatchesService', function(ScopedInterventionMatchesService) {
-        return {
-            restrict: 'EA',
-            replace: true,
-            scope: {
-                title: '@',
-                item: '=',
-                status: '=',
-             orders:'=',
-                fireScrollToEvent: '&'
-             
-            },
-            templateUrl: 'view1/link.html',
-            controller:'scopedController',
-            link: function (scope, elem, iAttre) {
-                scope.staticText = resources.messages.analytics.assessment;
-                scope.ScopedInterventionMatchesService = ScopedInterventionMatchesService;
-
+    var myChart = echarts.init(document.getElementById('echarts'));
+    $scope.DISTRIBUTION_ID = $echarts.generateInstanceIdentity();
+    $scope.distribution = {
+        xAxis : [
+            {
+                type : 'category',
+                data : ['周一','周二','周三','周四','周五','周六','周日']
             }
-        };
-    }])
-
+        ],
+        yAxis : [
+            {
+                type : 'value'
+            }
+        ],
+        series : [
+            {
+                name:'联盟广告',
+                type:'bar',
+                data:[220, 182, 191, 234, 290, 330, 310]
+            }
+        ]
+    };
+}])
 
 
 ;
