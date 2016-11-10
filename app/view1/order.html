@@ -1,0 +1,45 @@
+<h1>Your Order</h1>
+
+<!--
+<div ng-repeat="item in items">
+    <span>{{item.title}}</span>
+    <input ng-model="item.quantity" />
+    <span>{{item.price | currency}}</span>
+    {{item.price * item.quantity | currency}}<button ng-click="remove($index)">Remove</button>
+</div>
+-->
+
+<div class="page-header">
+    <h1>order list</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>title</th>
+                <th>total</th>
+
+            </tr>
+            </thead>
+
+            <tbody>
+            <div >
+                <tr data-ng-repeat="item in items">
+                    <td>{{item.title}}</td>
+
+                    <td>{{item.price * item.quantity | currency}}</td>
+
+                </tr>
+            </div>
+            </tbody>
+
+        </table>
+    </div>
+
+</div>
+
+
+
+

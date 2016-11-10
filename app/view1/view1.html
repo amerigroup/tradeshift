@@ -1,0 +1,69 @@
+<h1>Your product</h1>
+
+<!--
+<div ng-repeat="item in items">
+    <span>{{item.title}}</span>
+    <input ng-model="item.quantity" />
+    <span>{{item.price | currency}}</span>
+    {{item.price * item.quantity | currency}}<button ng-click="remove($index)">Remove</button>
+</div>
+-->
+
+<div class="page-header">
+    <h1>product list</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>title</th>
+                <th>price</th>
+                <th>quantity</th>
+                <th>total</th>
+                <th>action</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <div >
+                <tr dir-paginate="item in items | filter:q | itemsPerPage: pageSize" current-page="currentPage">
+                <td>{{item.title}}</td>
+                <td>{{item.price | currency}}</td>
+                <td><input ng-model="item.quantity" /></td>
+
+                <td>{{item.price * item.quantity | currency}}</td>
+                <td>
+                   <!-- <button class="btn btn-link" ng-click="remove($index)">Remove</button> <button class="btn btn-link" ng-click="remove($index)">update</button>
+                 put-order="ScopedInterventionMatchesService.putOrder(item)"
+                 -->
+                   <scoped-intervention-matched-item item="item"
+                                                     orders="orders">
+                    </scoped-intervention-matched-item>
+                </td>
+
+            </tr>
+            </div>
+            </tbody>
+
+        </table>
+
+    </div>
+{{orders}}
+
+</div>
+<div class="row">
+    <div class="text-center">
+        <small>this is in "OtherController"</small>
+
+        <div >
+            <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="bower_components/angularUtils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
+        </div>
+        </div>
+
+</div>
+
+
+
+
