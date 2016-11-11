@@ -1,4 +1,4 @@
-FindMovie project
+FindFoodTruck project
 
 Prerequisites
 
